@@ -1,0 +1,7 @@
+first
+word
+another
+word
+another
+two
+words
