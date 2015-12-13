@@ -117,7 +117,7 @@ namespace _03_design_hw
                 leftEdge -= horizontalStep;
                 topEdge -= verticalStep;
                 bottomEdge += verticalStep;
-                rightEdge -= horizontalStep;
+                rightEdge += horizontalStep;
             }
             return new Point(rand.Next(0, mapSize.Width), rand.Next(0, mapSize.Height));
         }
