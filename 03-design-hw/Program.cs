@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace _03_design_hw
 {
@@ -10,12 +12,8 @@ namespace _03_design_hw
     {
         static void Main(string[] args)
         {
-            var reader = new SimpleStringStatsReader("src.txt");
-            var wordSequence = reader.Stats;
-            foreach (var word in wordSequence)
-            {
-                Console.WriteLine(word);
-            }
+            var cloudMaker = new CloudMaker("src.txt");
+            cloudMaker.SaveCloud("test.png");
         }
     }
 }
