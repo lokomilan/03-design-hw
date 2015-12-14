@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace _03_design_hw
 {
     class TagCloud
     {
-        public Bitmap _cloudMap;
+        public Bitmap CloudMap;
         private Color _bgColor;
         private Size _size;
 
@@ -18,7 +13,7 @@ namespace _03_design_hw
         {
             _size = size;
             _bgColor = bgColor;
-            _cloudMap = FillCloudMap(new Bitmap(size.Width, size.Height), bgColor);
+            CloudMap = FillCloudMap(new Bitmap(size.Width, size.Height), bgColor);
         }
         private static Bitmap FillCloudMap(Bitmap empty, Color bgColor)
         {
@@ -36,7 +31,7 @@ namespace _03_design_hw
                 for (var y = position.Y; y <= position.Y + tagSize.Height; y++)
                 {
                     if (x >= _size.Width || y >= _size.Height || x < 0 || y < 0 ||
-                        !_cloudMap.GetPixel(x, y).ToArgb().Equals(_bgColor.ToArgb()))
+                        !CloudMap.GetPixel(x, y).ToArgb().Equals(_bgColor.ToArgb()))
                         return false;
                 }
             }

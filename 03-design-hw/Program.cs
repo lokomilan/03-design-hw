@@ -14,7 +14,6 @@ namespace _03_design_hw
         {
             var cloudMaker = new CloudMaker("src.txt");
             cloudMaker.SaveCloud("test.png");
-            
         }
     }
 }
