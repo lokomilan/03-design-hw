@@ -72,79 +72,56 @@ namespace _03_design_hw
         //    return new Point(x, y);
         //}
 
-        private bool CheckProbableTagPosition(HashSet<Point> cloudMap, Point position, Size tagSize)
-        {
-            for (var x = position.X; x <= position.X + tagSize.Width; x++)
-            {
-                for (var y = position.Y; y <= position.Y + tagSize.Height; y++)
-                {
-                    if (cloudMap.Contains(new Point(x, y)))
-                        return false;
-                }
-            }
-            return true;
-        }
+       
 
-        private HashSet<Point> UpdateCloudMap(HashSet<Point> cloudMap, Point position, Size tagSize)
-        {
-            var newCloudMap = cloudMap;
-            for (var x = position.X; x <= position.X + tagSize.Width; x++)
-            {
-                for (var y = position.Y; y <= position.Y + tagSize.Height; y++)
-                {
-                    newCloudMap.Add(new Point(x, y));
-                }
-            }
-            return newCloudMap;
-        }
+        //private bool CheckProbableTagPosition(HashSet<Point> cloudMap, Point position, Size tagSize)
+        //{
+        //    for (var x = position.X; x <= position.X + tagSize.Width; x++)
+        //    {
+        //        for (var y = position.Y; y <= position.Y + tagSize.Height; y++)
+        //        {
+        //            if (cloudMap.Contains(new Point(x, y)))
+        //                return false;
+        //        }
+        //    }
+        //    return true;
+        //}
 
-        private Point GetProperTagPosition(HashSet<Point> cloudMap, Size mapSize, Size tagSize, int stepsNumber = 100)
+        //private HashSet<Point> UpdateCloudMap(HashSet<Point> cloudMap, Point position, Size tagSize)
+        //{
+        //    var newCloudMap = cloudMap;
+        //    for (var x = position.X; x <= position.X + tagSize.Width; x++)
+        //    {
+        //        for (var y = position.Y; y <= position.Y + tagSize.Height; y++)
+        //        {
+        //            newCloudMap.Add(new Point(x, y));
+        //        }
+        //    }
+        //    return newCloudMap;
+        //}
+
+        public TagCloud GetCloud(IOrderedEnumerable<KeyValuePair<string, int>> tagDict, Size size, Color bgColor)
         {
+            var tagCloud = new TagCloud(size, bgColor);
+            var gr = Graphics.FromImage(tagCloud._cloudMap);
             var rand = new Random();
-            var leftEdge = (mapSize.Width - tagSize.Width)/2;
-            var rightEdge = leftEdge + tagSize.Width;
-            var horizontalStep = Math.Max(1, leftEdge/stepsNumber);
-            var topEdge = (mapSize.Height - tagSize.Height)/2;
-            var bottomEdge = topEdge + tagSize.Height;
-            var verticalStep = Math.Max(1, topEdge/stepsNumber);
-            for (var step = 0; step < stepsNumber; step++)
-            {
-                var x = rand.Next(leftEdge, rightEdge - tagSize.Width);
-                var y = rand.Next(topEdge, bottomEdge - tagSize.Height);
-                var position = new Point(x, y);
-                if (CheckProbableTagPosition(cloudMap, position, tagSize))
-                    return position;
-                leftEdge -= horizontalStep;
-                topEdge -= verticalStep;
-                bottomEdge += verticalStep;
-                rightEdge += horizontalStep;
-            }
-            return new Point(rand.Next(0, mapSize.Width), rand.Next(0, mapSize.Height));
-        }
-
-        public Bitmap GetCloud(IOrderedEnumerable<KeyValuePair<string, int>> tagDict, Size mapSize)
-        {
-            var bm = new Bitmap(mapSize.Width, mapSize.Height);
-            var gr = Graphics.FromImage(bm);
-            var rand = new Random();
-            var cloudMap = new HashSet<Point>();
             foreach (var pair in tagDict)
             {
                 var font = new Font("Tahoma", pair.Value);
                 var tagSize = gr.MeasureString(pair.Key, font).ToSize();
-                var position = GetProperTagPosition(cloudMap, mapSize, tagSize);
+                var position = tagCloud.GetProperTagPosition(tagSize);
                 gr.DrawString(pair.Key, font, Brushes.Black, position);
-                cloudMap = UpdateCloudMap(cloudMap, position, tagSize);
             }
-            return bm;
+            return tagCloud;
         }
 
         public void SaveCloud(string pathToCloud)
         {
             var statistics = GetStatistics(_words);
             var tagDict = GetTagDict(statistics, 10, 100);
-            var cloud = GetCloud(tagDict, new Size(1024, 768));
-            cloud.Save(pathToCloud, ImageFormat.Png);
+            var cloud = GetCloud(tagDict, new Size(1024, 768), Color.Aqua);
+            //Console.WriteLine(Color.Black.ToKnownColor());
+            cloud._cloudMap.Save(pathToCloud, ImageFormat.Png);
         }
 
         //public void DrawCloud(string path)
