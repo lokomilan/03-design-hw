@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Drawing.Imaging;
+using CommandLine;
 
 namespace _03_design_hw
 {
@@ -12,8 +13,10 @@ namespace _03_design_hw
     {
         static void Main(string[] args)
         {
-            var cloudMaker = new CloudMaker("src.txt");
-            cloudMaker.SaveCloud("test.png");
+            var options = new Options();
+            Parser.Default.ParseArguments(args, options);
+            var cloudMaker = new CloudMaker(options.PathToWords, options.PathToTrash, options.PathToCloud);
+            cloudMaker.SaveCloud();
         }
     }
 }
