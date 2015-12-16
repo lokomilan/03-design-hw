@@ -10,15 +10,14 @@ namespace _03_design_hw
 {
     class CloudMaker
     {
-        private readonly string PathToWords;
-        private readonly string PathToTrash;
-        private readonly string PathToCloud;
+        public Dictionary<FileAccess, string> Paths { get; set; }
 
         public CloudMaker(string pathToWords, string pathToTrash, string pathToCloud)
         {
-            PathToWords = pathToWords;
-            PathToTrash = pathToTrash;
-            PathToCloud = pathToCloud;
+            Paths = new Dictionary<FileAccess, string>();
+            Paths.Add(FileAccess.PathToWords, pathToWords);
+            Paths.Add(FileAccess.PathToTrash, pathToTrash);
+            Paths.Add(FileAccess.PathToCloud, pathToCloud);
         }
         public TagCloud GetCloud(List<KeyValuePair<string, int>> tagDict, Size size, Color bgColor)
         {
@@ -37,9 +36,9 @@ namespace _03_design_hw
 
         public void SaveCloud()
         {
-            var statistics = new Statistics(PathToWords, PathToTrash, 10, 100, 50);
+            var statistics = new Statistics(Paths[FileAccess.PathToWords], Paths[FileAccess.PathToTrash], 10, 100, 50);
             var cloud = GetCloud(statistics.TagList, new Size(1024, 768), Color.Aqua);
-            cloud.CloudMap.Save(PathToCloud, ImageFormat.Png);
+            cloud.CloudMap.Save(Paths[FileAccess.PathToCloud], ImageFormat.Png);
         }
     }
 }
