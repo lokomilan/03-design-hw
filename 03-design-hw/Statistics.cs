@@ -7,24 +7,15 @@ using System.Threading.Tasks;
 
 namespace _03_design_hw
 {
-    public class Statistics
+    public static class Statistics
     {
-        public List<KeyValuePair<string, int>> TagList;
 
-        public Statistics(string pathToWords, string pathToTrash, int minTagFontSize, int maxTagFontSize, int top)
-        {
-            var words = GetWords(pathToWords);
-            var trash = GetTrash(pathToTrash);
-            var freqDict = GetFrequencyDict(words, trash);
-            TagList = GetTagSequence(freqDict, minTagFontSize, maxTagFontSize, top);
-        }
-
-        private IEnumerable<string> GetWords(string pathToWords)
+        public static IEnumerable<string> GetWords(string pathToWords)
         {
             return File.ReadLines(pathToWords);
         }
 
-        private HashSet<string> GetTrash(string pathToTrash)
+        public static HashSet<string> GetTrash(string pathToTrash)
         {
             var trashCan = new HashSet<string>();
             foreach (var word in File.ReadAllLines(pathToTrash))
@@ -34,7 +25,7 @@ namespace _03_design_hw
             return trashCan;
         }
 
-        private Dictionary<string, int> GetFrequencyDict 
+        public static Dictionary<string, int> GetFrequencyDict 
             (IEnumerable<string> words, HashSet<string> trash)
         {
             var frequencyDict = new Dictionary<string, int>();
@@ -50,7 +41,7 @@ namespace _03_design_hw
             return frequencyDict;
         }
 
-        public List<KeyValuePair<string, int>> GetTagSequence
+        public static List<KeyValuePair<string, int>> GetTagList
             (Dictionary<string, int> frequencyDict, int minTagFontSize, int maxTagFontSize, int top)
         {
             var tagDict = new Dictionary<string, int>();

@@ -36,8 +36,11 @@ namespace _03_design_hw
 
         public void SaveCloud()
         {
-            var statistics = new Statistics(Paths[FileAccess.PathToWords], Paths[FileAccess.PathToTrash], 10, 100, 50);
-            var cloud = GetCloud(statistics.TagList, new Size(1024, 768), Color.Aqua);
+            var words = Statistics.GetWords(Paths[FileAccess.PathToWords]);
+            var trash = Statistics.GetTrash(Paths[FileAccess.PathToTrash]);
+            var freqDict = Statistics.GetFrequencyDict(words, trash);
+            var tagList = Statistics.GetTagList(freqDict, 10, 100, 50);
+            var cloud = GetCloud(tagList, new Size(1024, 768), Color.Aqua);
             cloud.CloudMap.Save(Paths[FileAccess.PathToCloud], ImageFormat.Png);
         }
     }
