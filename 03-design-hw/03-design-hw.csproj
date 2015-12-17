@@ -51,7 +51,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CloudMaker.cs" />
-    <Compile Include="FileAccess.cs" />
+    <Compile Include="CloudGraphicParams.cs" />
+    <Compile Include="DefaultParams.cs" />
+    <Compile Include="FilePathParams.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

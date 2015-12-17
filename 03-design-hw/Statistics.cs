@@ -48,7 +48,7 @@ namespace _03_design_hw
             var minFreq = frequencyDict.Min(x => x.Value);
             var maxFreq = frequencyDict.Max(x => x.Value);
             int diff = maxFreq - minFreq;
-            double ratio = minTagFontSize / minTagFontSize;
+            double ratio = (double)minTagFontSize / minTagFontSize;
             foreach (var pair in frequencyDict)
             {
                 var currentFreq = pair.Value;
